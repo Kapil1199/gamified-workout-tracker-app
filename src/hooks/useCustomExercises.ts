@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import type { CustomExercise, NewCustomExercise } from '@/lib/types';
+import type { CustomExercise, NewCustomExercise, MuscleGroup } from '@/lib/types';
 
 export function useCustomExercises() {
   const [customExercises, setCustomExercises] = useState<CustomExercise[]>([]);
@@ -62,4 +62,11 @@ export function useCustomExercises() {
     deleteCustomExercise,
     refetch: fetchCustom,
   };
+}
+
+export function useExercisesByMuscle(
+  muscle: MuscleGroup | null,
+  customExercises: CustomExercise[],
+) {
+  return { customExercises: muscle ? customExercises.filter((e) => e.muscle_group === muscle) : customExercises };
 }

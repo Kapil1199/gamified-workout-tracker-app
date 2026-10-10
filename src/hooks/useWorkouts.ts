@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { NewWorkout, Workout, MuscleGroup } from '@/lib/types';
-import { ALL_MUSCLE_GROUPS } from '@/lib/exercises';
 
 export function useWorkouts() {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
@@ -63,22 +62,16 @@ export function useWorkouts() {
 }
 
 export function useMuscleActivity(workouts: Workout[]) {
-  const [activity, setActivity] = useState<Partial<Record<MuscleGroup, number>>>({});
+  const [activity, setActivity] = useState<Record<MuscleGroup, number>>(
+    {} as Record<MuscleGroup, number>,
+  );
 
   useEffect(() => {
-    const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-    thirtyDaysAgo.setHours(0, 0, 0, 0);
-
     const map: Partial<Record<MuscleGroup, number>> = {};
     for (const w of workouts) {
-      if (new Date(w.logged_at) < thirtyDaysAgo) continue;
-      const mg = w.muscle_group as MuscleGroup;
-      if (ALL_MUSCLE_GROUPS.includes(mg)) {
-        map[mg] = (map[mg] ?? 0) + 1;
-      }
+      map[w.muscle_group] = (map[w.muscle_group] ?? 0) + 1;
     }
-    setActivity(map);
+    setActivity(map as Record<MuscleGroup, number>);
   }, [workouts]);
 
   return activity;

@@ -1,4 +1,4 @@
-import type { ExerciseCatalog, FlattenedExercise, MuscleGroup } from './types';
+import type { Exercise, MuscleGroup } from './types';
 
 export const MUSCLE_GROUPS: { id: MuscleGroup; label: string; view: 'front' | 'back' }[] = [
   { id: 'chest', label: 'Chest', view: 'front' },
@@ -22,147 +22,65 @@ export const MUSCLE_LABELS: Record<MuscleGroup, string> = MUSCLE_GROUPS.reduce(
   {} as Record<MuscleGroup, string>,
 );
 
-export const ALL_MUSCLE_GROUPS = MUSCLE_GROUPS.map((mg) => mg.id);
+export const EXERCISES: Exercise[] = [
+  { id: 'bench-press', name: 'Bench Press', muscleGroup: 'chest', category: 'strength', defaultSets: 4, defaultReps: 8, defaultWeight: 135 },
+  { id: 'push-ups', name: 'Push-ups', muscleGroup: 'chest', category: 'strength', defaultSets: 3, defaultReps: 20, defaultWeight: 0 },
+  { id: 'incline-press', name: 'Incline Dumbbell Press', muscleGroup: 'chest', category: 'strength', defaultSets: 3, defaultReps: 10, defaultWeight: 50 },
+  { id: 'cable-flyes', name: 'Cable Flyes', muscleGroup: 'chest', category: 'strength', defaultSets: 3, defaultReps: 12, defaultWeight: 30 },
+  { id: 'overhead-press', name: 'Overhead Press', muscleGroup: 'shoulders', category: 'strength', defaultSets: 4, defaultReps: 8, defaultWeight: 95 },
+  { id: 'lateral-raises', name: 'Lateral Raises', muscleGroup: 'shoulders', category: 'strength', defaultSets: 3, defaultReps: 15, defaultWeight: 20 },
+  { id: 'face-pulls', name: 'Face Pulls', muscleGroup: 'shoulders', category: 'strength', defaultSets: 3, defaultReps: 15, defaultWeight: 40 },
+  { id: 'bicep-curls', name: 'Bicep Curls', muscleGroup: 'biceps', category: 'strength', defaultSets: 3, defaultReps: 12, defaultWeight: 35 },
+  { id: 'hammer-curls', name: 'Hammer Curls', muscleGroup: 'biceps', category: 'strength', defaultSets: 3, defaultReps: 12, defaultWeight: 30 },
+  { id: 'preacher-curls', name: 'Preacher Curls', muscleGroup: 'biceps', category: 'strength', defaultSets: 3, defaultReps: 10, defaultWeight: 40 },
+  { id: 'tricep-dips', name: 'Tricep Dips', muscleGroup: 'triceps', category: 'strength', defaultSets: 3, defaultReps: 12, defaultWeight: 0 },
+  { id: 'rope-pushdowns', name: 'Rope Pushdowns', muscleGroup: 'triceps', category: 'strength', defaultSets: 3, defaultReps: 15, defaultWeight: 45 },
+  { id: 'skull-crushers', name: 'Skull Crushers', muscleGroup: 'triceps', category: 'strength', defaultSets: 3, defaultReps: 10, defaultWeight: 50 },
+  { id: 'wrist-curls', name: 'Wrist Curls', muscleGroup: 'forearms', category: 'strength', defaultSets: 3, defaultReps: 20, defaultWeight: 25 },
+  { id: 'farmer-walks', name: "Farmer's Walks", muscleGroup: 'forearms', category: 'strength', defaultSets: 3, defaultReps: 1, defaultWeight: 60 },
+  { id: 'plank', name: 'Plank', muscleGroup: 'abs', category: 'strength', defaultSets: 3, defaultReps: 1, defaultWeight: 0 },
+  { id: 'crunches', name: 'Crunches', muscleGroup: 'abs', category: 'strength', defaultSets: 3, defaultReps: 25, defaultWeight: 0 },
+  { id: 'hanging-leg-raises', name: 'Hanging Leg Raises', muscleGroup: 'abs', category: 'strength', defaultSets: 3, defaultReps: 12, defaultWeight: 0 },
+  { id: 'russian-twists', name: 'Russian Twists', muscleGroup: 'obliques', category: 'strength', defaultSets: 3, defaultReps: 20, defaultWeight: 15 },
+  { id: 'side-bends', name: 'Side Bends', muscleGroup: 'obliques', category: 'strength', defaultSets: 3, defaultReps: 15, defaultWeight: 35 },
+  { id: 'squats', name: 'Barbell Squats', muscleGroup: 'quads', category: 'strength', defaultSets: 4, defaultReps: 8, defaultWeight: 185 },
+  { id: 'leg-press', name: 'Leg Press', muscleGroup: 'quads', category: 'strength', defaultSets: 4, defaultReps: 12, defaultWeight: 225 },
+  { id: 'lunges', name: 'Walking Lunges', muscleGroup: 'quads', category: 'strength', defaultSets: 3, defaultReps: 12, defaultWeight: 50 },
+  { id: 'leg-extension', name: 'Leg Extensions', muscleGroup: 'quads', category: 'strength', defaultSets: 3, defaultReps: 15, defaultWeight: 80 },
+  { id: 'calf-raises', name: 'Calf Raises', muscleGroup: 'calves', category: 'strength', defaultSets: 4, defaultReps: 20, defaultWeight: 100 },
+  { id: 'seated-calf-raises', name: 'Seated Calf Raises', muscleGroup: 'calves', category: 'strength', defaultSets: 3, defaultReps: 15, defaultWeight: 60 },
+  { id: 'deadlift', name: 'Deadlift', muscleGroup: 'lower_back', category: 'strength', defaultSets: 3, defaultReps: 5, defaultWeight: 225 },
+  { id: 'supermans', name: "Superman's", muscleGroup: 'lower_back', category: 'strength', defaultSets: 3, defaultReps: 15, defaultWeight: 0 },
+  { id: 'barbell-row', name: 'Barbell Row', muscleGroup: 'lats', category: 'strength', defaultSets: 4, defaultReps: 8, defaultWeight: 135 },
+  { id: 'pull-ups', name: 'Pull-ups', muscleGroup: 'lats', category: 'strength', defaultSets: 3, defaultReps: 10, defaultWeight: 0 },
+  { id: 'lat-pulldown', name: 'Lat Pulldown', muscleGroup: 'lats', category: 'strength', defaultSets: 3, defaultReps: 12, defaultWeight: 100 },
+  { id: 'seated-row', name: 'Seated Cable Row', muscleGroup: 'lats', category: 'strength', defaultSets: 3, defaultReps: 12, defaultWeight: 90 },
+  { id: 'shrugs', name: 'Barbell Shrugs', muscleGroup: 'traps', category: 'strength', defaultSets: 4, defaultReps: 12, defaultWeight: 135 },
+  { id: 'hip-thrust', name: 'Hip Thrusts', muscleGroup: 'glutes', category: 'strength', defaultSets: 3, defaultReps: 12, defaultWeight: 135 },
+  { id: 'glute-bridge', name: 'Glute Bridges', muscleGroup: 'glutes', category: 'strength', defaultSets: 3, defaultReps: 15, defaultWeight: 0 },
+  { id: 'leg-curls', name: 'Lying Leg Curls', muscleGroup: 'hamstrings', category: 'strength', defaultSets: 3, defaultReps: 12, defaultWeight: 70 },
+  { id: 'rdl', name: 'Romanian Deadlift', muscleGroup: 'hamstrings', category: 'strength', defaultSets: 3, defaultReps: 10, defaultWeight: 135 },
+  { id: 'running', name: 'Running', muscleGroup: 'quads', category: 'cardio', defaultSets: 1, defaultReps: 1, defaultWeight: 0 },
+  { id: 'cycling', name: 'Cycling', muscleGroup: 'quads', category: 'cardio', defaultSets: 1, defaultReps: 1, defaultWeight: 0 },
+  { id: 'rowing', name: 'Rowing Machine', muscleGroup: 'lats', category: 'cardio', defaultSets: 1, defaultReps: 1, defaultWeight: 0 },
+];
 
-export const EXERCISE_CATALOG: ExerciseCatalog = {
-  MuscleGroup: {
-    chest: {
-      'Push-ups': { baseXpPerRep: 2.2 },
-      'Dumbbell Floor Press': { baseXpPerRep: 1.5, weightMultiplier: 0.5 },
-      'Band Chest Press': { baseXpPerRep: 1.8 },
-    },
-    shoulders: {
-      'Pike Push-ups': { baseXpPerRep: 2.5 },
-      'Dumbbell Overhead Press': { baseXpPerRep: 1.5, weightMultiplier: 0.5 },
-      'Band Lateral Raises': { baseXpPerRep: 1.5 },
-    },
-    biceps: {
-      'Dumbbell Curls': { baseXpPerRep: 1.5, weightMultiplier: 0.5 },
-      'Band Curls': { baseXpPerRep: 1.5 },
-    },
-    forearms: {
-      'Dumbbell Wrist Curls': { baseXpPerRep: 1.5, weightMultiplier: 0.5 },
-      'Towel Hangs': { baseXpPerRep: 2.0 },
-    },
-    abs: {
-      'Crunches': { baseXpPerRep: 1.5 },
-      'Plank': { baseXpPerRep: 1.0, isDuration: true },
-      'Leg Raises': { baseXpPerRep: 2.0 },
-    },
-    obliques: {
-      'Russian Twists': { baseXpPerRep: 1.5 },
-      'Side Plank': { baseXpPerRep: 1.0, isDuration: true },
-    },
-    quads: {
-      'Bodyweight Squats': { baseXpPerRep: 1.8 },
-      'Dumbbell Goblet Squats': { baseXpPerRep: 1.5, weightMultiplier: 0.5 },
-      'Jump Squats': { baseXpPerRep: 2.2 },
-    },
-    calves: {
-      'Standing Calf Raises': { baseXpPerRep: 1.0 },
-      'Skipping Rope': { baseXpPerRep: 0.5 },
-    },
-    traps: {
-      'Dumbbell Shrugs': { baseXpPerRep: 1.5, weightMultiplier: 0.5 },
-      'Downward Dog Holds': { baseXpPerRep: 2.0 },
-    },
-    lats: {
-      'Dumbbell Rows': { baseXpPerRep: 1.5, weightMultiplier: 0.5 },
-      'Band Pulldowns': { baseXpPerRep: 1.8 },
-    },
-    triceps: {
-      'Chair Dips': { baseXpPerRep: 2.2 },
-      'Dumbbell Overhead Extension': { baseXpPerRep: 1.5, weightMultiplier: 0.5 },
-    },
-    lower_back: {
-      'Superman Holds': { baseXpPerRep: 2.0 },
-    },
-    glutes: {
-      'Glute Bridges': { baseXpPerRep: 1.8 },
-      'Dumbbell Romanian Deadlifts': { baseXpPerRep: 1.5, weightMultiplier: 0.5 },
-    },
-    hamstrings: {
-      'Dumbbell RDLs': { baseXpPerRep: 1.5, weightMultiplier: 0.5 },
-      'Sliding Leg Curls': { baseXpPerRep: 2.0 },
-    },
-  },
-  Cardio: {
-    'Running': { xpPerMinute: 10 },
-    'Cycling': { xpPerMinute: 10 },
-    'Swimming': { xpPerMinute: 10 },
-    'Football': { xpPerMinute: 10 },
-    'Badminton': { xpPerMinute: 10 },
-  },
-};
-
-function slugify(name: string): string {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-}
-
-const _flattened: FlattenedExercise[] = [];
-
-for (const [mgName, exercises] of Object.entries(EXERCISE_CATALOG.MuscleGroup)) {
-  const muscleGroup = mgName as MuscleGroup;
-  if (!exercises) continue;
-  for (const [exName, def] of Object.entries(exercises)) {
-    _flattened.push({
-      id: `builtin-${slugify(exName)}`,
-      name: exName,
-      type: 'strength' as const,
-      muscleGroup,
-      baseXpPerRep: def.baseXpPerRep,
-      weightMultiplier: def.weightMultiplier,
-      isDuration: def.isDuration,
-    });
-  }
-}
-
-for (const [exName, def] of Object.entries(EXERCISE_CATALOG.Cardio)) {
-  _flattened.push({
-    id: `builtin-${slugify(exName)}`,
-    name: exName,
-    type: 'cardio' as const,
-    xpPerMinute: def.xpPerMinute,
-  });
-}
-
-export const EXERCISES: FlattenedExercise[] = _flattened;
-
-export function getExerciseById(id: string): FlattenedExercise | undefined {
+export function getExerciseById(id: string): Exercise | undefined {
   return EXERCISES.find((e) => e.id === id);
 }
 
-export function getExercisesByMuscleGroup(mg: MuscleGroup): FlattenedExercise[] {
-  return EXERCISES.filter((e) => e.type === 'strength' && e.muscleGroup === mg);
-}
-
-export function getCardioExercises(): FlattenedExercise[] {
-  return EXERCISES.filter((e) => e.type === 'cardio');
-}
-
-export function calculateStrengthXP(
+export function calculateXP(
   sets: number,
   reps: number,
   weight: number,
-  baseXpPerRep: number,
-  weightMultiplier?: number,
+  durationMin: number,
+  category: 'strength' | 'cardio',
 ): number {
-  if (sets === 0 || reps === 0) return 0;
-  const volumeXP = sets * reps * baseXpPerRep;
-  const totalWeight = sets * reps * weight;
-  const weightXP = weight > 0 && weightMultiplier ? totalWeight * weightMultiplier : 0;
-  return Math.round(volumeXP + weightXP);
-}
-
-export function calculateDurationXP(
-  sets: number,
-  durationSec: number,
-  baseXpPerRep: number,
-): number {
-  if (sets === 0 || durationSec === 0) return 0;
-  return Math.round(sets * durationSec * baseXpPerRep);
-}
-
-export function calculateCardioXP(durationMin: number, xpPerMinute: number): number {
-  return Math.round(durationMin * xpPerMinute);
+  if (category === 'cardio') {
+    return Math.round(durationMin * 8 + 20);
+  }
+  const volumeXP = sets * reps * 2;
+  const weightXP = weight > 0 ? Math.round(weight * sets * 0.3) : 0;
+  const baseXP = sets * 10;
+  return Math.round(baseXP + volumeXP + weightXP);
 }
