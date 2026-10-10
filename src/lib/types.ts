@@ -14,21 +14,39 @@ export type MuscleGroup =
   | 'traps'
   | 'lower_back';
 
-export interface Exercise {
+export type ExerciseType = 'strength' | 'cardio';
+
+export interface StrengthExerciseDef {
+  baseXpPerRep: number;
+  weightMultiplier?: number;
+  isDuration?: boolean;
+}
+
+export interface CardioExerciseDef {
+  xpPerMinute: number;
+}
+
+export interface ExerciseCatalog {
+  MuscleGroup: Partial<Record<MuscleGroup, Record<string, StrengthExerciseDef>>>;
+  Cardio: Record<string, CardioExerciseDef>;
+}
+
+export interface FlattenedExercise {
   id: string;
   name: string;
-  muscleGroup: MuscleGroup;
-  category: 'strength' | 'cardio';
-  defaultSets: number;
-  defaultReps: number;
-  defaultWeight: number;
+  type: ExerciseType;
+  muscleGroup?: MuscleGroup;
+  baseXpPerRep?: number;
+  weightMultiplier?: number;
+  isDuration?: boolean;
+  xpPerMinute?: number;
 }
 
 export interface Workout {
   id: string;
   exercise_id: string;
   exercise_name: string;
-  muscle_group: MuscleGroup;
+  muscle_group: string;
   sets: number;
   reps: number;
   weight: number;
@@ -40,7 +58,7 @@ export interface Workout {
 export interface NewWorkout {
   exercise_id: string;
   exercise_name: string;
-  muscle_group: MuscleGroup;
+  muscle_group: string;
   sets: number;
   reps: number;
   weight: number;
@@ -52,14 +70,16 @@ export interface CustomExercise {
   id: string;
   name: string;
   xp_per_set: number;
-  muscle_group: MuscleGroup;
+  muscle_group: string;
+  is_cardio: boolean;
   created_at: string;
 }
 
 export interface NewCustomExercise {
   name: string;
   xp_per_set: number;
-  muscle_group: MuscleGroup;
+  muscle_group: string;
+  is_cardio: boolean;
 }
 
 export type GoalStatus = 'in_progress' | 'completed';

@@ -8,12 +8,14 @@ export interface LevelInfo {
   progress: number;
 }
 
+const XP_PER_LEVEL = 1000;
+
 export function xpToLevel(totalXP: number): number {
-  return Math.floor((1 + Math.sqrt(1 + (8 * totalXP) / 100)) / 2);
+  return Math.floor(totalXP / XP_PER_LEVEL) + 1;
 }
 
 export function levelToXP(level: number): number {
-  return (level * (level - 1) * 100) / 2;
+  return (level - 1) * XP_PER_LEVEL;
 }
 
 export function getLevelInfo(totalXP: number): LevelInfo {
@@ -39,9 +41,9 @@ export function getLevelInfo(totalXP: number): LevelInfo {
 export const RANK_TITLES: { minLevel: number; title: string }[] = [
   { minLevel: 1, title: 'Rookie' },
   { minLevel: 10, title: 'Associate' },
-  { minLevel: 25, title: 'Professional' },
-  { minLevel: 50, title: 'Veteran' },
-  { minLevel: 75, title: 'Expert' },
+  { minLevel: 30, title: 'Professional' },
+  { minLevel: 60, title: 'Veteran' },
+  { minLevel: 90, title: 'Expert' },
 ];
 
 export function getRankTitle(level: number): string {

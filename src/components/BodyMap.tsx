@@ -17,10 +17,8 @@ const INACTIVE = '#334155';
 
 function intensityColor(count: number): string {
   if (count <= 0) return INACTIVE;
-  if (count >= 8) return '#22d3ee';
-  if (count >= 5) return '#0ea5e9';
-  if (count >= 3) return '#0284c7';
-  if (count >= 2) return '#0369a1';
+  if (count >= 9) return '#22d3ee';
+  if (count >= 4) return '#0284c7';
   return '#075985';
 }
 
@@ -303,15 +301,15 @@ export function BodyMap({ activity, onMuscleClick }: BodyMapProps) {
         </span>
         <span className="flex items-center gap-1.5">
           <span className="h-3 w-3 rounded-sm" style={{ background: intensityColor(2) }} />
-          Low
+          Low (1-3)
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="h-3 w-3 rounded-sm" style={{ background: intensityColor(4) }} />
-          Medium
+          <span className="h-3 w-3 rounded-sm" style={{ background: intensityColor(5) }} />
+          Medium (4-8)
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="h-3 w-3 rounded-sm" style={{ background: intensityColor(8) }} />
-          High
+          <span className="h-3 w-3 rounded-sm" style={{ background: intensityColor(9) }} />
+          High (9+)
         </span>
       </div>
 
